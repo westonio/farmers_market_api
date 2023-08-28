@@ -1,16 +1,29 @@
 require 'rails_helper'
 
 RSpec.describe 'Markets API' do
-  it 'sends a list of Markets' do
-    create_list(:market, 5)
+  before(:each) do
+    markets = create_list(:market, 3)
     
+    vendor_ids = create_list(:vendor, 10).pluck(:id)
+
+   markets.each do |market|
+      ids = vendor_ids.sample(4)
+      MarketVendor.create!(market_id: market.id, vendor_id: ids[0])
+      MarketVendor.create!(market_id: market.id, vendor_id: ids[1])
+      MarketVendor.create!(market_id: market.id, vendor_id: ids[2])
+      MarketVendor.create!(market_id: market.id, vendor_id: ids[3])
+    end
+
+  end
+
+  it 'sends a list of Markets' do
     get '/api/v0/markets'
-
+    
     expect(response).to be_successful
-
+    
     markets = JSON.parse(response.body, symbolize_names: true)
     
-    expect(markets.size).to eq(5)
+    expect(markets.size).to eq(3)
 
     markets.each do |market|
       expect(market).to have_key(:id)
@@ -39,6 +52,20 @@ RSpec.describe 'Markets API' do
       
       expect(market).to have_key(:lon)
       expect(market[:lon]).to be_a(String)
+    end
+  end
+
+  it 'also sends a markets count of vendors' do
+    get '/api/v0/markets'
+
+    expect(response).to be_successful
+
+    markets = JSON.parse(response.body, symbolize_names: true)
+
+    markets.each do |market|
+      expect(market).to have_key(:vendor_count)
+      expect(market[:vendor_count]).to be_an(Integer)
+      expect(market[:vendor_count]).to eq(4)
     end
   end
 end
