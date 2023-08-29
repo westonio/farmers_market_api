@@ -5,13 +5,15 @@ RSpec.describe 'Market Vendors API' do
     @market1 = create(:market)
     @market2 = create(:market)
     
-    vendor_ids = create_list(:vendor, 5).pluck(:id)
+    vendor_ids = create_list(:vendor, 6).pluck(:id)
 
     @market1.market_vendors.create!(vendor_id: vendor_ids[0])
     @market1.market_vendors.create!(vendor_id: vendor_ids[1])
     @market1.market_vendors.create!(vendor_id: vendor_ids[2])
     @market1.market_vendors.create!(vendor_id: vendor_ids[3])
     @market1.market_vendors.create!(vendor_id: vendor_ids[4])
+
+    @market2.market_vendors.create!(vendor_id: vendor_ids[5]) 
   end
   
   describe 'GET /markets/:id/vendors' do
@@ -24,7 +26,6 @@ RSpec.describe 'Market Vendors API' do
         vendors = JSON.parse(response.body, symbolize_names: true)[:data]
 
         expect(vendors.count).to eq(5)
-
         
         vendors.each do |vendor|
           expect(vendor).to have_key(:id)
