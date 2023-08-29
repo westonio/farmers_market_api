@@ -67,4 +67,61 @@ RSpec.describe 'Vendors API' do
       end
     end
   end
+
+  describe 'POST /vendors/:id' do
+    context 'using valid inputs for Vendor attributes' do
+      it 'should successfully create a Vendor' do
+        vendor_params = ({
+          name: "Buzzy Bees",
+          description: "Local honey and wax products",
+          contact_name: "Scarlett Johansson",
+          contact_phone: "8389928383",
+          credit_accepted: true
+        })
+
+        headers = {"CONTENT_TYPE" => "application/json"}
+
+        post '/api/v0/vendors', headers: headers, params: JSON.generate(vendor: vendor_params)
+
+        created_vendor = Vendor.last
+        
+        expect(response).to be_successful
+        expect(response.status).to eq(201)
+
+        expect(created_vendor.name).to eq("Buzzy Bees")
+        expect(created_vendor.description).to eq("Local honey and wax products")
+        expect(created_vendor.contact_name).to eq("Scarlett Johansson")
+        expect(created_vendor.contact_phone).to eq("8389928383")
+        expect(created_vendor.credit_accepted).to eq(true)
+      end
+    end
+
+    context 'using invalid inputs for Vendor attributes' do
+      it 'should send a 400 error' do
+        vendor_params = ({
+          name: "", # name blank
+          description: "Local honey and wax products",
+          contact_name: "Scarlett Johansson",
+          # contact_phone blank
+          credit_accepted: false
+        })
+
+        headers = {"CONTENT_TYPE" => "application/json"}
+
+        post '/api/v0/vendors', headers: headers, params: JSON.generate(vendor: vendor_params)
+        
+       
+        expect(response.status).to eq(400)
+ 
+        not_found = JSON.parse(response.body, symbolize_names: true)
+
+        expect(not_found).to have_key(:errors)
+        expect(not_found[:errors]).to be_an(Array)
+
+        expect(not_found[:errors].first).to have_key(:details)
+        expect(not_found[:errors].first[:details]).to be_a(String)
+        expect(not_found[:errors].first[:details]).to eq("Validation failed: Name can't be blank, Contact phone can't be blank")
+      end
+    end
+  end
 end
