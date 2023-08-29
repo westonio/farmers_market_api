@@ -17,7 +17,18 @@ class Api::V0::VendorsController < ApplicationController
 
   def create
     begin
-      render json: Vendor.create!(vendor_params), status: :created
+      render json: VendorSerializer.new(Vendor.create!(vendor_params)), status: :created
+    rescue ActiveRecord::RecordInvalid => e
+      render json: ErrorSerializer.new(e).serialized_json, status: :bad_request
+    end
+  end
+
+  def update
+    begin
+      Vendor.find(params[:id]).update!(vendor_params)
+      render json: VendorSerializer.new(Vendor.find(params[:id]))
+    rescue ActiveRecord::RecordNotFound => e
+      render json: ErrorSerializer.new(e).serialized_json, status: :not_found
     rescue ActiveRecord::RecordInvalid => e
       render json: ErrorSerializer.new(e).serialized_json, status: :bad_request
     end
