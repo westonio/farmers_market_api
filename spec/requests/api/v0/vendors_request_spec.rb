@@ -2,18 +2,7 @@ require 'rails_helper'
 
 RSpec.describe 'Vendors API' do
   before(:each) do
-    @market1 = create(:market)
-    @market2 = create(:market)
-    
-    vendors = create_list(:vendor, 5)
-    vendor_ids = vendors.pluck(:id)
-
-    @vendor1 = vendors[0]
-    
-    @market1.market_vendors.create!(vendor_id: vendor_ids[1])
-    @market1.market_vendors.create!(vendor_id: vendor_ids[2])
-    @market1.market_vendors.create!(vendor_id: vendor_ids[3])
-    @market1.market_vendors.create!(vendor_id: vendor_ids[4])
+    @vendor1 = create(:vendor)
   end
   
   describe 'GET /vendors/:id' do
