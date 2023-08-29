@@ -2,7 +2,15 @@ class Api::V0::VendorsController < ApplicationController
   def index
     begin
       render json: VendorSerializer.new(Market.find(params[:market_id]).vendors)
-    rescue StandardError => e
+    rescue ActiveRecord::RecordNotFound => e
+      render json: ErrorMarketSerializer.new(e).serialized_json, status: :not_found
+    end
+  end
+
+  def show
+    begin
+      render json: VendorSerializer.new(Vendor.find(params[:id]))
+    rescue ActiveRecord::RecordNotFound => e
       render json: ErrorMarketSerializer.new(e).serialized_json, status: :not_found
     end
   end
