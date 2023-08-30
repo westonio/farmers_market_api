@@ -2,13 +2,13 @@ require 'rails_helper'
 
 RSpec.describe 'Vendors API' do
   before(:each) do
-    @vendor1 = create(:vendor)
+    @vendor = create(:vendor)
   end
   
   describe 'GET /vendors/:id' do
     context 'using a valid vendor ID (happy path)' do
       it 'returns the vendors details' do
-        id = @vendor1.id
+        id = @vendor.id
 
         get "/api/v0/vendors/#{id}"
         
@@ -88,11 +88,11 @@ RSpec.describe 'Vendors API' do
     context 'using invalid inputs for Vendor attributes' do
       it 'should send a 400 error (bad request)' do
         vendor_params = ({
-                          name: "", # name blank
+                          name: "Busy Bee", 
                           description: "Local honey and wax products",
                           contact_name: "Scarlett Johansson",
                           # contact_phone blank
-                          credit_accepted: false
+                          #credit_accepted blank
                         })
         headers = {"CONTENT_TYPE" => "application/json"}
 
@@ -107,17 +107,17 @@ RSpec.describe 'Vendors API' do
 
         expect(not_found[:errors].first).to have_key(:details)
         expect(not_found[:errors].first[:details]).to be_a(String)
-        expect(not_found[:errors].first[:details]).to eq("Validation failed: Name can't be blank, Contact phone can't be blank")
+        expect(not_found[:errors].first[:details]).to eq("Validation failed: Contact phone can't be blank, Credit accepted cannot be blank (must be true or false)")
       end
     end
 
     describe 'PATCH /vendors/:id' do
       context 'using valid inputs to update Vendor attributes' do
         it 'should successfully update the Vendor' do
-          expect(@vendor1.name).to_not eq("Buzzy Bees")
-          expect(@vendor1.description).to_not eq("Local honey and wax products")
+          expect(@vendor.name).to_not eq("Buzzy Bees")
+          expect(@vendor.description).to_not eq("Local honey and wax products")
           
-          id = @vendor1.id
+          id = @vendor.id
           vendor_params = ( {name: "Buzzy Bees", description: "Local honey and wax products" })
           headers = {"CONTENT_TYPE" => "application/json"}
   
@@ -151,7 +151,7 @@ RSpec.describe 'Vendors API' do
 
       context 'using invalid inputs to update Vendor attributes' do
         it 'should send a 400 error (bad request)' do
-          id = @vendor1.id
+          id = @vendor.id
           vendor_params = ({ description: "" }) #cannot be blank
           headers = {"CONTENT_TYPE" => "application/json"}
   
@@ -169,7 +169,7 @@ RSpec.describe 'Vendors API' do
     describe 'DELETE /vendors/:id' do
       context 'using valid Vendor ID' do
         it 'sends code 204 (:no_content)' do
-          id = @vendor1.id
+          id = @vendor.id
           
           delete "/api/v0/vendors/#{id}"
 
