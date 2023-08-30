@@ -160,7 +160,51 @@ RSpec.describe 'Market Vendors API' do
 
         not_found = JSON.parse(response.body, symbolize_names: true)
 
-        expect(not_found[:errors].first[:details]).to eq("Validation failed: Market vendor asociation between market with market_id=#{@market.id} and vendor_id=#{@vendor.id} already exists")
+        expect(not_found[:errors].first[:details]).to eq("Validation failed: MarketVendor association between market with market_id=#{@market.id} and vendor_id=#{@vendor.id} already exists")
+      end
+    end
+  end
+
+  describe 'DELETE /api/v0/market_vendors' do
+    # * New Setup
+    before(:each) do
+      @market = create(:market)
+      @vendor = create(:vendor)
+      @market_vendor = MarketVendor.create!(market_id: @market.id, vendor_id: @vendor.id)
+    end
+
+    context 'when valid market and vendor IDs are sent' do
+      it 'returns a 204 status code and destroys the MarketVendor association object' do
+        params = { market_id: @market.id, vendor_id: @vendor.id }
+        headers = { 'Content-Type' => 'application/json' }
+
+        expect(MarketVendor.exists?(params)).to eq(true)
+
+        delete '/api/v0/market_vendors', headers: headers, params: JSON.generate(market_vendor: params)
+
+        expect(MarketVendor.exists?(params)).to eq(false)
+
+        expect(response).to be_successful
+        expect(response.status).to eq(204)
+
+        expect(response.body).to eq("") # error code 204 no_content intentionally does not allow sending info back
+      end
+
+      it 'returns a 404 status code' do
+        m_id = 321321321321
+        v_id = 123123123123
+        params = { market_id: m_id, vendor_id:  v_id} #invalid ids
+        headers = { 'Content-Type' => 'application/json' }
+
+
+        delete '/api/v0/market_vendors', headers: headers, params: JSON.generate(market_vendor: params)
+
+        expect(response).to_not be_successful
+        expect(response.status).to eq(404)
+
+        not_found = JSON.parse(response.body, symbolize_names: true)
+
+        expect(not_found[:errors].first[:details]).to eq("Couldn't find MarketVendor with market_vendors.market_id=#{m_id} AND market_vendors.vendor_id=#{v_id}")
       end
     end
   end
