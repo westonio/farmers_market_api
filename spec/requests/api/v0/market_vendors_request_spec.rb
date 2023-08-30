@@ -71,16 +71,22 @@ RSpec.describe 'Market Vendors API' do
   end
 
   describe 'POST /api/v0/market_vendors' do
+  # * New Setup
     before(:each) do
       @market = create(:market)
       @vendor = create(:vendor)
     end
 
     context 'when valid market and vendor ids are used' do
-      it 'sends a 201 status code' do
+      it 'sends a 201 status code and creates MarketVendor object' do
+        expect(MarketVendor.exists?(market_id: @market.id, vendor_id: @vendor.id)).to eq(false)
+
         params = { market_id: @market.id, vendor_id: @vendor.id }
         headers = { 'Content-Type' => 'application/json' }
+        
         post '/api/v0/market_vendors', headers: headers, params: JSON.generate(market_vendor: params)
+
+        expect(MarketVendor.exists?(market_id: @market.id, vendor_id: @vendor.id)).to eq(true)
         
         expect(response).to be_successful
         expect(response.status).to eq(201)
