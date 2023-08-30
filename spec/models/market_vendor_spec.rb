@@ -15,7 +15,7 @@ RSpec.describe MarketVendor, type: :model do
       market_vendor = MarketVendor.new(market_id: market.id, vendor_id: vendor.id)
 
       expect(market_vendor).to_not be_valid
-      expect(market_vendor.errors[:base]).to include("Market vendor asociation between market with market_id=#{market.id} and vendor_id=#{vendor.id} already exists")
+      expect(market_vendor.errors[:base]).to include("MarketVendor association between market with market_id=#{market.id} and vendor_id=#{vendor.id} already exists")
     end
   end
 end
