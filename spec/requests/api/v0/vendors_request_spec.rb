@@ -2,7 +2,16 @@ require 'rails_helper'
 
 RSpec.describe 'Vendors API' do
   before(:each) do
+    @market1 = create(:market)
+    @market2 = create(:market)
+
     @vendor = create(:vendor)
+    @vendor2 = create(:vendor)
+
+    @market_vendor1 = @vendor.market_vendors.create!(market_id: @market1.id)
+    @market_vendor2 = @vendor.market_vendors.create!(market_id: @market2.id)
+    
+    @market_vendor3 = @vendor2.market_vendors.create!(market_id: @market2.id)
   end
   
   describe 'GET /vendors/:id' do
@@ -170,13 +179,19 @@ RSpec.describe 'Vendors API' do
       context 'using valid Vendor ID' do
         it 'sends code 204 (:no_content)' do
           id = @vendor.id
-          
+          expect(Vendor.exists?(@vendor.id)).to eq(true)
+          expect(MarketVendor.exists?(@market_vendor1.id)).to eq(true)
+          expect(MarketVendor.exists?(@market_vendor2.id)).to eq(true)
+
           delete "/api/v0/vendors/#{id}"
 
           expect(response).to be_successful
           expect(response.status).to eq(204)
-
           expect(response.body).to eq("")
+
+          expect(Vendor.exists?(@vendor.id)).to eq(false)
+          expect(MarketVendor.exists?(@market_vendor1.id)).to eq(false)
+          expect(MarketVendor.exists?(@market_vendor2.id)).to eq(false)
         end
       end
 
