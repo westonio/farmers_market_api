@@ -8,7 +8,7 @@ class Vendor < ApplicationRecord
   private
   def boolean_values
     if credit_accepted.nil?
-      errors.add(:base, 'Credit accepted cannot be blank (must be true or false)')
+      errors.add(:credit_accepted, 'cannot be blank (must be true or false)')
     end
   end
 end

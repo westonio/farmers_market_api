@@ -17,7 +17,7 @@ RSpec.describe Vendor, type: :model do
         vendor = build(:vendor, credit_accepted: nil)
 
         expect(vendor).to_not be_valid
-        expect(vendor.errors[:base]).to include('Credit accepted cannot be blank (must be true or false)')
+        expect(vendor.errors[:credit_accepted]).to include('cannot be blank (must be true or false)')
       end
   
       it 'passes validation when credit_accepted is true' do
