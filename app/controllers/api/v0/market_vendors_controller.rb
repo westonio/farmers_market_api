@@ -1,4 +1,12 @@
 class Api::V0::MarketVendorsController < ApplicationController
+  def index
+    begin
+      render json: VendorSerializer.new(Market.find(params[:market_id]).vendors)
+    rescue ActiveRecord::RecordNotFound => e
+      render json: ErrorSerializer.new(e).serialized_json, status: :not_found
+    end
+  end
+  
   def create
     begin
       render json: MarketVendorSerializer.new(MarketVendor.create!(market_vendor_params)), status: :created
