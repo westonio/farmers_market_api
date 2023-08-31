@@ -122,7 +122,7 @@ RSpec.describe Market, type: :model do
     end
     
     it '#self.search returns error when invalid params searched' do
-      params = { county: 'Los Angeles', state: 'California' }
+      params = { county: 'Los Angeles' }
 
       expect{ Market.search(params) }.to raise_error(SearchError)
     end

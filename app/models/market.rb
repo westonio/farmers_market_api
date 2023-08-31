@@ -23,10 +23,8 @@ class Market < ApplicationRecord
   end
   
   def self.validate_params(params)
-    current_params = params.keys.reject { |key| key == "controller" || key == "action" }
-    current_search = current_params.map &:to_sym
+    current_search = params.slice(:name, :city, :state).keys.map(&:to_sym)
     valid_search = [[:state], [:city, :state], [:city, :name, :state], [:name, :state], [:name]]
- 
     valid_search.include?(current_search.sort)
   end
 
