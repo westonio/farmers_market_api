@@ -16,6 +16,7 @@ This is my favorite project that I've undertaken so far and one that I believe c
 - Implemented a Micro Service Architecture to manage farmers' markets and vendors.
 - Designed robust testing to develop and expose a comprehensive API for market, vendor, and nearby ATM information.
 - Leveraged serializer to format JSON responses efficiently.
+- Implemented ActiveRecord Callbacks to streamline data validation.
 - Employed exception-handling techniques, including rescuing errors and raising custom errors, to provide clear and informative error responses.
 - Consumed a TomTom maps/navigation API and translated its use into a new endpoint to find ATMs near a Market's location.
 
