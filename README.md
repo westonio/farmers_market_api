@@ -22,9 +22,9 @@ This is my favorite project that I've undertaken so far and one that I believe c
 
 ### Project Challenges
 Being my first time creating a microservice JSON API, as well as using error exception handlers, serializers, and ActiveRecord callbacks, this project proved to be one of the most challenging, but rewarding projects for me yet. The initial challenges for me were:
-- Learning how to use serializers to format JSON responses effectively was a learning curve. Figuring out the right configuration for serializing different types of data, handling associations, and creating a consistent response format demanded a solid grasp of this new concept.
+- One of the initial hurdles was mastering the effective use of serializers to format JSON responses. This task involved configuring serializers for diverse data types, handling associations between different models, and ensuring a consistent and user-friendly response format. After mastering the fundamentals, I leveraged the json-serializer gem.
 - Incorporating exception handlers for the first time introduced me to a new layer of complexity. Determining when to raise custom errors, handling different error scenarios gracefully, and providing informative error messages required thoughtful consideration.
-- Developing a variety of endpoints, both RESTful and non-RESTful, was a challenging task. Ensuring each endpoint correctly interacted with the data and met the API's purpose while adhering to best practices was a significant challenge. Additionally, ensuring that 
+- Developing a variety of endpoints, both RESTful and non-RESTful, was a challenging task. Ensuring each endpoint correctly interacted with the data and met the API's purpose while adhering to best practices was a significant challenge. 
 
 ---
 
