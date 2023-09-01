@@ -4,6 +4,10 @@ class Market < ApplicationRecord
 
   validates_presence_of :name, :street, :city, :county, :state, :zip, :lat, :lon
 
+  def vendors_count
+    vendors.count
+  end
+  
   private
   
   def self.search(params)

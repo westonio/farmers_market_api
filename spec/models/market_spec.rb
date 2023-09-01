@@ -16,8 +16,25 @@ RSpec.describe Market, type: :model do
     it { should validate_presence_of :lon }
   end
 
+  describe 'Instance Methods' do
+    it 'counts the number of related vendors' do
+      market1 = create(:market)
+      market2 = create(:market)
 
-  describe 'Model Methods' do
+      vendor_ids = create_list(:vendor, 5).pluck(:id)
+
+      MarketVendor.create!(market_id: market1.id, vendor_id: vendor_ids[0])
+      MarketVendor.create!(market_id: market1.id, vendor_id: vendor_ids[1])
+      MarketVendor.create!(market_id: market1.id, vendor_id: vendor_ids[2])
+      MarketVendor.create!(market_id: market1.id, vendor_id: vendor_ids[3])
+
+      MarketVendor.create!(market_id: market2.id, vendor_id: vendor_ids[4])
+
+      expect(market1.vendors_count).to eq(4)
+    end
+  end
+
+  describe 'Private Model Methods' do
     before(:each) do
       @market1 = create(:market, name: 'Sunflower Market', city: 'Denver', state: 'Colorado')
       @market2 = create(:market, name: 'Western Market', city: 'Denver', state: 'Colorado')
