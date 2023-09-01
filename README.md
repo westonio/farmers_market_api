@@ -1,5 +1,5 @@
 # Farmers Market API
-I designed this Rails application as a solo project to provide a microservice architecture offering a variety of endpoints for discovering sustainable and local Farmers' Markets and Vendors and learned crucial concepts for building  JSON APIs along the way.
+I designed this Rails application as a solo project to provide a microservice architecture offering a variety of endpoints for discovering and managing local Farmers' Markets and Vendors, learning some crucial concepts for building JSON APIs along the way.
 
 ## Project Overview
 Farmers Market serves as a backend API-only application, catering to users seeking information about markets and vendors in their locality. With a strong foundation in microservice architecture, the project exposes a range of ReSTful and non-RESTful endpoints. Through this API, users can find markets, view vendor details, create vendors, manage associations between markets and vendors, and more.
@@ -21,7 +21,7 @@ This is my favorite project that I've undertaken so far and one that I believe c
 - Consumed a TomTom maps/navigation API and translated its use into a new endpoint to find ATMs near a Market's location.
 
 ### Project Challenges
-Being my first time creating a micro-service JSON API, as well as using error exception handling and serializer, this project proved to be one of the most challenging, but rewarding projects for me yet. The initial challenges for me were:
+Being my first time creating a microservice JSON API, as well as using error exception handlers, serializers, and ActiveRecord callbacks, this project proved to be one of the most challenging, but rewarding projects for me yet. The initial challenges for me were:
 - Learning how to use serializers to format JSON responses effectively was a learning curve. Figuring out the right configuration for serializing different types of data, handling associations, and creating a consistent response format demanded a solid grasp of this new concept.
 - Incorporating exception handlers for the first time introduced me to a new layer of complexity. Determining when to raise custom errors, handling different error scenarios gracefully, and providing informative error messages required thoughtful consideration.
 - Developing a variety of endpoints, both RESTful and non-RESTful, was a challenging task. Ensuring each endpoint correctly interacted with the data and met the API's purpose while adhering to best practices was a significant challenge. Additionally, ensuring that 
