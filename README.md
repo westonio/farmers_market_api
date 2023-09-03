@@ -1,5 +1,5 @@
 # Farmers Market API
-I designed this Rails application as a solo project to provide a microservice architecture offering a variety of endpoints for discovering and managing local Farmers' Markets and Vendors, learning some crucial concepts for building JSON APIs along the way.
+I built this Rails application as a solo project to provide a microservice architecture offering a variety of endpoints for discovering and managing local Farmers' Markets and Vendors, learning some crucial concepts for building JSON APIs along the way.
 
 ## Project Overview
 Farmers Market serves as a backend API-only application, catering to users seeking information about markets and vendors in their locality. With a strong foundation in microservice architecture, the project exposes a range of ReSTful and non-RESTful endpoints. Through this API, users can find markets, view vendor details, create vendors, manage associations between markets and vendors, and more.
