@@ -7,7 +7,7 @@ Farmers Market serves as a backend API-only application, catering to users seeki
 ---
 ### Languages, Frameworks, and Tools used
 - **Building:** Ruby, Rails, and some SQL
-- **Testing:** RSpec, ShouldaMatchers, Webmock, VCR
+- **Testing:** RSpec, ShouldaMatchers, Webmock, VCR, Postman
 - **Database:** PostgreSQL
 - **Consuming API:** Faraday HTTP client library
 
